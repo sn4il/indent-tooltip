@@ -10,3 +10,5 @@ This atom plugin adds a little tooltip that shows the parent block for current l
 - CSON
 
 ![Indent Tooltip Animation](indentation-tooltip-animation.gif)
+
+Use `Ctrl+Alt+T` hotkey to enable/disable the tooltip quickly.
