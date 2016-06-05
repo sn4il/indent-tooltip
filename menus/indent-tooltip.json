@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle Indent Tooltip",
+        "command": "indent-tooltip:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "Indent Tooltip",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "indent-tooltip:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
