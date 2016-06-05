@@ -1,7 +1,7 @@
 {
   "name": "indent-tooltip",
   "main": "./lib/indent-tooltip",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A useful helper for the indentation-sensitive languages.",
   "keywords": [],
   "activationCommands": {
