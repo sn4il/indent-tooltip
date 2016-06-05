@@ -9,6 +9,6 @@ This atom plugin adds a little tooltip that shows the parent block for current l
 - CoffeeScript
 - CSON
 
-![Indent Tooltip Animation](indentation-tooltip-animation.gif)
+![indentation-tooltip-animation](https://cloud.githubusercontent.com/assets/9012519/15808199/38a95720-2b7a-11e6-91bf-a9ddadcc5b5c.gif)
 
 Use `Ctrl+Alt+T` hotkey to enable/disable the tooltip quickly.
