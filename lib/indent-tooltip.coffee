@@ -36,6 +36,10 @@ module.exports = IndentTooltip =
     atom.config.observe 'editor.fontSize', @debounce @updateTooltip, 50
     atom.config.observe 'editor.fontFamily', @debounce @updateTooltip, 50
 
+    # Updates the tooltip when tab/pane is changed.
+    atom.workspace.onDidChangeActivePaneItem (item) =>
+      @updateTooltip()
+
   # Toggles the state of the plugin.
   toggle: ->
     @isActive = not @isActive
@@ -86,6 +90,9 @@ module.exports = IndentTooltip =
 
     editor = atom.workspace.getActiveTextEditor()
     view = atom.views.getView editor
+
+    return unless view?
+
     node = view.shadowRoot.querySelector '.cursor-line .source'
 
     if node?
