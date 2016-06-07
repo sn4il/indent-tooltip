@@ -1,14 +1,18 @@
-# Indent Tooltip Plugin for Atom
+# Indent Tooltip
 
-A useful helper for the indentation-sensitive languages, primarily designed for the Jade language.
+A useful plugin for the indentation-sensitive languages, primarily designed for Jade.
 
-This atom plugin adds a little tooltip that shows the parent block for current line. Works for the following languages:
+![Indent Tooltip Demo](https://cloud.githubusercontent.com/assets/9012519/15859926/b2d5a624-2ccf-11e6-86c6-deddc3cc4bf3.gif)
+
+## Features
+
+The plugin adds a little tooltip that shows a parent block for cursor position. This makes code navigation a little bit easier. Currently works for the following languages:
 
 - Jade
 - Stylus
 - CoffeeScript
 - CSON
 
-![indentation-tooltip-animation](https://cloud.githubusercontent.com/assets/9012519/15808199/38a95720-2b7a-11e6-91bf-a9ddadcc5b5c.gif)
+## Usage
 
-Use `Ctrl+Alt+T` hotkey to enable/disable the tooltip quickly.
+Use the <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> hotkey to enable/disable the tooltip.
