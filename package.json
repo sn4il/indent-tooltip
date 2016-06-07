@@ -2,7 +2,7 @@
   "name": "indent-tooltip",
   "main": "./lib/indent-tooltip",
   "version": "0.1.3",
-  "description": "A useful helper for the indentation-sensitive languages.",
+  "description": "A useful plugin for the indentation-sensitive languages.",
   "keywords": [
     "jade",
     "stylus",
