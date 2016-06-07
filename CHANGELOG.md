@@ -1,3 +1,8 @@
+## 0.2.0
+* Deprecated methods was replaced with new ones
+* Some code refactoring was made
+* Subscriptions are now disposed when tooltip is off
+
 ## 0.1.3
 * Tooltip behavior issue on scrolling fixed
 
