@@ -1,60 +1,64 @@
 {CompositeDisposable} = require 'atom'
 
 module.exports = IndentTooltip =
+  subscriptions: null
+  activeStateSubscriptions: null
+  tooltipSubscriptions: null
+
   tooltipFontFamily: null
   tooltipFontSize: null
 
-  subscriptions: null
-  tooltipSubscription: null
-
   isActive: false
 
-  activate: (state) ->
+  activate: ->
     @subscriptions = new CompositeDisposable
 
     @subscriptions.add atom.commands.add 'atom-workspace',
       'indent-tooltip:toggle': => @toggle()
 
-    atom.workspace.observeTextEditors (editor) =>
-      editor.onDidChangeCursorPosition @debounce @updateTooltip, 50
-
-      # Hides the tooltip while scrolling.
-      view = atom.views.getView editor
-      view.onDidChangeScrollTop @debounce @updateTooltip, 500
-      view.onDidChangeScrollTop (event) =>
-        console.log event
-        @disposeTooltip()
-
-    # Keeps the font family "up to date".
-    atom.config.observe 'editor.fontFamily', (fontFamily) =>
-      @tooltipFontFamily = fontFamily
-
-    # Keep the font size "up to date".
-    atom.config.observe 'editor.fontSize', (fontSize) =>
-      @tooltipFontSize = fontSize
-
-      unless fontSize < 10
-        if fontSize < 15
-          @tooltipFontSize -= 1
-        else
-          @tooltipFontSize -= 2
-
-    # Updates the tooltip when font family or font size is changed.
-    atom.config.observe 'editor.fontSize', @debounce @updateTooltip, 50
-    atom.config.observe 'editor.fontFamily', @debounce @updateTooltip, 50
-
-    # Updates the tooltip when tab/pane is changed.
-    atom.workspace.onDidChangeActivePaneItem (item) =>
-      @updateTooltip()
-
   # Toggles the state of the plugin.
   toggle: ->
-    @isActive = not @isActive
+    if @isActive = not @isActive
+      @enable()
+    else
+      @disable()
 
-    unless @isActive
-      @disposeTooltip()
+  # Enables tooltip.
+  enable: ->
+    @activeStateSubscriptions = new CompositeDisposable
 
+    # Displays tooltip immediately after enabling
     @updateTooltip()
+
+    @activeStateSubscriptions.add atom.workspace.observeTextEditors (editor) =>
+      @activeStateSubscriptions.add editor.onDidChangeCursorPosition @debounce @updateTooltip, 50
+
+      # Hides tooltip on scroll.
+      view = atom.views.getView editor
+      @activeStateSubscriptions.add [
+        view.onDidChangeScrollTop @debounce @updateTooltip, 500
+        view.onDidChangeScrollTop () => @tooltipSubscriptions.dispose()
+      ]...
+
+    @activeStateSubscriptions.add [
+
+      # Handles font family change.
+      atom.config.observe 'editor.fontFamily', @debounce @updateTooltip, 50
+      atom.config.observe 'editor.fontFamily', (fontFamily) =>
+        @tooltipFontFamily = fontFamily
+
+      # Handles font size change.
+      atom.config.observe 'editor.fontSize', @debounce @updateTooltip, 50
+      atom.config.observe 'editor.fontSize', (fontSize) =>
+        @tooltipFontSize = fontSize - 1
+    ]...
+
+    # Updates tooltip on tab/pane change.
+    @activeStateSubscriptions.add atom.workspace.onDidChangeActivePaneItem () => @updateTooltip()
+
+  # Disables tooltip.
+  disable: ->
+    @activeStateSubscriptions.dispose()
 
   # Executes the callback with delay.
   debounce: (callback, delay) ->
@@ -83,23 +87,14 @@ module.exports = IndentTooltip =
       if prevRowIndent < startRowIndent
         return prevRow
 
-  # Disposes the tooltip subscription.
-  disposeTooltip: ->
-    if @tooltipSubscription?
-      @tooltipSubscription.dispose()
-      @tooltipSubscription = null
-
   # Updates the tooltip.
   updateTooltip: ->
-    return unless @isActive
-
-    @disposeTooltip()
+    @tooltipSubscriptions.dispose() if @tooltipSubscriptions?
+    @tooltipSubscriptions = new CompositeDisposable
 
     editor = atom.workspace.getActiveTextEditor()
     view = atom.views.getView editor
-
     return unless view?
-
     node = view.shadowRoot.querySelector '.cursor-line .source'
 
     if node?
@@ -117,4 +112,6 @@ module.exports = IndentTooltip =
           placement: 'auto right'
           template: '<div class="tooltip indent-tooltip__tooltip indent-tooltip__tooltip--compact" role="tooltip" style="font-family: \'' + @tooltipFontFamily + '\'; font-size: ' + @tooltipFontSize + 'px;"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
 
-        @tooltipSubscription = atom.tooltips.add node, tooltipOptions
+        tooltipDisposable = atom.tooltips.add node, tooltipOptions
+        @tooltipSubscriptions.add tooltipDisposable
+        @activeStateSubscriptions.add tooltipDisposable
