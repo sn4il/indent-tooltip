@@ -1,4 +1,4 @@
-{CompositeDisposable} = require 'atom'
+{Emitter, CompositeDisposable} = require 'atom'
 
 module.exports = IndentTooltip =
   tooltipFontFamily: null
@@ -17,6 +17,11 @@ module.exports = IndentTooltip =
 
     atom.workspace.observeTextEditors (editor) =>
       editor.onDidChangeCursorPosition @debounce @updateTooltip, 50
+
+      # Hides the tooltip while scrolling.
+      editor.onDidChangeScrollTop @debounce @updateTooltip, 500
+      editor.onDidChangeScrollTop () =>
+        @disposeTooltip()
 
     # Keeps the font family "up to date".
     atom.config.observe 'editor.fontFamily', (fontFamily) =>
