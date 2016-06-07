@@ -1,4 +1,7 @@
-# 0.1.2
+## 0.1.3
+* Tooltip behavior issue on scrolling fixed
+
+## 0.1.2
 * Appearance for the Atom & Material themes fixed
 * Tooltip behavior fixed
 
