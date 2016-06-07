@@ -3,7 +3,14 @@
   "main": "./lib/indent-tooltip",
   "version": "0.1.2",
   "description": "A useful helper for the indentation-sensitive languages.",
-  "keywords": [],
+  "keywords": [
+    "jade",
+    "stylus",
+    "coffee",
+    "cson",
+    "indent",
+    "indentation"
+  ],
   "activationCommands": {
     "atom-workspace": "indent-tooltip:toggle"
   },
