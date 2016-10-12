@@ -1,3 +1,7 @@
+## 1.2.1
+* Tooltip was enabled for SASS
+* Tooltip font issue on unspecified Font Family was fixed
+
 ## 0.2.0
 * Deprecated methods was replaced with new ones
 * Some code refactoring was made
