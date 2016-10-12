@@ -45,7 +45,7 @@ module.exports = IndentTooltip =
       # Handles font family change.
       atom.config.observe 'editor.fontFamily', @debounce @updateTooltip, 50
       atom.config.observe 'editor.fontFamily', (fontFamily) =>
-        @tooltipFontFamily = fontFamily
+        @tooltipFontFamily = fontFamily || 'Menlo, Consolas, \'DejaVu Sans Mono\', monospace'
 
       # Handles font size change.
       atom.config.observe 'editor.fontSize', @debounce @updateTooltip, 50
@@ -102,7 +102,7 @@ module.exports = IndentTooltip =
 
       if parentRow?
         [scope] = editor.scopeDescriptorForBufferPosition([parentRow, 0]).scopes
-        return unless /jade|stylus|coffee/i.test scope
+        return unless /jade|stylus|sass|coffee/i.test scope
 
         parentRowLine = editor.lineTextForBufferRow parentRow
 
@@ -110,7 +110,7 @@ module.exports = IndentTooltip =
           title: '<b>inside</b> ' + parentRowLine
           trigger: 'manual'
           placement: 'auto right'
-          template: '<div class="tooltip indent-tooltip__tooltip indent-tooltip__tooltip--compact" role="tooltip" style="font-family: \'' + @tooltipFontFamily + '\'; font-size: ' + @tooltipFontSize + 'px;"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+          template: '<div class="tooltip indent-tooltip__tooltip indent-tooltip__tooltip--compact" role="tooltip" style="font-family: ' + @tooltipFontFamily + '; font-size: ' + @tooltipFontSize + 'px;"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
 
         tooltipDisposable = atom.tooltips.add node, tooltipOptions
         @tooltipSubscriptions.add tooltipDisposable

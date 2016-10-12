@@ -10,6 +10,7 @@ The plugin adds a little tooltip that shows a parent block for cursor position. 
 
 - Jade
 - Stylus
+- SASS2
 - CoffeeScript
 - CSON
 
