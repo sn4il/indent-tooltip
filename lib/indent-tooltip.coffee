@@ -95,7 +95,7 @@ module.exports = IndentTooltip =
     editor = atom.workspace.getActiveTextEditor()
     view = atom.views.getView editor
     return unless view?
-    node = view.shadowRoot.querySelector '.cursor-line .source'
+    node = view.querySelector '.cursor-line .syntax--source'
 
     if node?
       parentRow = @getParentRow editor.getCursorBufferPosition().row
