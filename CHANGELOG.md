@@ -1,4 +1,7 @@
-## 1.2.1
+## 0.2.2
+* Usage of deprecated shadowRoot was replaced with direct access to editor
+
+## 0.2.1
 * Tooltip was enabled for SASS
 * Tooltip font issue on unspecified Font Family was fixed
 
