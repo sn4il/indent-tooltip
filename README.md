@@ -16,4 +16,6 @@ The plugin adds a little tooltip that shows a parent block for cursor position. 
 
 ## Usage
 
-Use the <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> hotkey to enable/disable the tooltip.
+- <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> to enable/disable the tooltip.
+
+- <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd> to toggle between showing first parent row only or full path to the top-level row.
