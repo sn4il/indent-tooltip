@@ -1,3 +1,6 @@
+## 0.3.0
+* An option to display full path to the top-level row was added
+
 ## 0.2.2
 * Usage of deprecated shadowRoot was replaced with direct access to editor
 
