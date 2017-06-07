@@ -1,12 +1,4 @@
 {
-  "context-menu": {
-    "atom-text-editor": [
-      {
-        "label": "Toggle Indent Tooltip",
-        "command": "indent-tooltip:toggle"
-      }
-    ]
-  },
   "menu": [
     {
       "label": "Packages",
@@ -17,6 +9,9 @@
             {
               "label": "Toggle",
               "command": "indent-tooltip:toggle"
+            }, {
+              "label": "Toggle Full Path",
+              "command": "indent-tooltip:toggle-full-path"
             }
           ]
         }

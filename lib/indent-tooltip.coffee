@@ -9,6 +9,7 @@ module.exports = IndentTooltip =
   tooltipFontSize: null
 
   isActive: false
+  showFullPath: false
 
   activate: ->
     @subscriptions = new CompositeDisposable
@@ -16,12 +17,19 @@ module.exports = IndentTooltip =
     @subscriptions.add atom.commands.add 'atom-workspace',
       'indent-tooltip:toggle': => @toggle()
 
+    @subscriptions.add atom.commands.add 'atom-text-editor',
+      'indent-tooltip:toggle-full-path': => @toggleFullPath()
+
   # Toggles the state of the plugin.
   toggle: ->
     if @isActive = not @isActive
       @enable()
     else
       @disable()
+
+  toggleFullPath: ->
+    @showFullPath = not @showFullPath
+    @updateTooltip()
 
   # Enables tooltip.
   enable: ->
@@ -99,15 +107,25 @@ module.exports = IndentTooltip =
 
     if node?
       parentRow = @getParentRow editor.getCursorBufferPosition().row
+      parentLines = []
 
-      if parentRow?
+      while parentRow?
         [scope] = editor.scopeDescriptorForBufferPosition([parentRow, 0]).scopes
         return unless /jade|stylus|sass|coffee/i.test scope
 
-        parentRowLine = editor.lineTextForBufferRow parentRow
+        parentLines.push editor.lineTextForBufferRow parentRow
 
+        break unless @showFullPath
+        parentRow = @getParentRow parentRow
+
+      for parentLine, i in parentLines
+        level = parentLines.length - i
+        indents = new Array(level).join '&nbsp;&nbsp;'
+        parentLines[i] = indents + parentLine.trim()
+
+      if parentLines.length > 0
         tooltipOptions =
-          title: '<b>inside</b> ' + parentRowLine
+          title: '<b>inside</b>' + (if parentLines.length  > 1 then '<br>' else ' ') + parentLines.reverse().join '<br>'
           trigger: 'manual'
           placement: 'auto right'
           template: '<div class="tooltip indent-tooltip__tooltip indent-tooltip__tooltip--compact" role="tooltip" style="font-family: ' + @tooltipFontFamily + '; font-size: ' + @tooltipFontSize + 'px;"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'

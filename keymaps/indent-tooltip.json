@@ -1,5 +1,9 @@
 {
   "atom-workspace": {
     "ctrl-alt-t": "indent-tooltip:toggle"
+  },
+
+  "atom-text-editor": {
+    "ctrl-alt-shift-t": "indent-tooltip:toggle-full-path"
   }
 }
