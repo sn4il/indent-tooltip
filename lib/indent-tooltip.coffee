@@ -42,11 +42,8 @@ module.exports = IndentTooltip =
       @activeStateSubscriptions.add editor.onDidChangeCursorPosition @debounce @updateTooltip, 50
 
       # Hides tooltip on scroll.
-      view = atom.views.getView editor
-      @activeStateSubscriptions.add [
-        view.onDidChangeScrollTop @debounce @updateTooltip, 500
-        view.onDidChangeScrollTop () => @tooltipSubscriptions.dispose()
-      ]...
+      window.addEventListener 'wheel', @debounce @updateTooltip, 500
+      window.addEventListener 'wheel', () => @tooltipSubscriptions.dispose()
 
     @activeStateSubscriptions.add [
 
