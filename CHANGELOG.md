@@ -1,3 +1,7 @@
+## 0.3.1
+* Issue with scrolling when mouse cursor is over the tooltip was fixed
+* Plugin crashing when editing top-level row was fixed
+
 ## 0.3.0
 * An option to display full path to the top-level row was added
 
