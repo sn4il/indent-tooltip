@@ -86,6 +86,8 @@ module.exports = IndentTooltip =
     until prevRow is 0
       prevRow = buffer.previousNonBlankRow prevRow
 
+      break unless prevRow?
+
       prevRowIndent = editor.indentationForBufferRow prevRow
       startRowIndent = editor.indentationForBufferRow startRow
 
